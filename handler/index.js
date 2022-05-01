@@ -1,37 +1,18 @@
-export default function makeExpressHandler(controller) {
-  return (req, res) => {
-    const httpRequest = adaptRequest(req);
+import audiobooksController from "../controllers/index.js";
+import makeHandler from "./make-handler.js";
 
-    controller(httpRequest)
-      .then(httpResponse => {
-        if (httpResponse.headers) {
-          res.set(httpResponse.headers);
-        }
-        res.type("json");
-        res.status(httpResponse.statusCode).send(httpResponse.body);
-      })
-      .catch(e => {
-        console.error(e);
+export const getAudiobooksHandler = makeHandler(
+  audiobooksController.getAudiobooks,
+);
 
-        return res
-          .status(500)
-          .send({ error: "An unknown error occurred." });
-      });
-  };
-}
+export const postAudiobookHandler = makeHandler(
+  audiobooksController.createAudiobook,
+);
 
-function adaptRequest(req) {
-  return Object.freeze({
-    body: req.body,
-    query: req.query,
-    params: req.params,
-    ip: req.ip,
-    method: req.method,
-    path: req.path,
-    headers: {
-      "Content-Type": req.get("Content-Type"),
-      Referer: req.get("referer"),
-      "User-Agent": req.get("User-Agent"),
-    },
-  });
-}
+export const patchAudiobookHandler = makeHandler(
+  audiobooksController.patchAudiobook,
+);
+
+export const deleteAudiobookHandler = makeHandler(
+  audiobooksController.deleteAudiobook,
+);
