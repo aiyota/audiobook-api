@@ -12,10 +12,7 @@ export default function makeEditAudiobook({ audiobookData }) {
     if (runtime < 0) throw new Error("'runtime' must be positive");
 
     const existingAudiobook = await audiobookData.getById(id);
-    if (!existingAudiobook)
-      throw new Error(
-        `An audiobook with the id of '${id}' does not exist`,
-      );
+    if (!existingAudiobook) return null;
 
     const isUpdated = await audiobookData.update({
       id,

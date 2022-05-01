@@ -4,10 +4,7 @@ import { required } from "../utils/index.js";
 export default function makeRemoveAudiobook({ audiobookData }) {
   return async function removeAudiobook(id = required("id")) {
     const existingAudiobook = await audiobookData.getById(id);
-    if (!existingAudiobook)
-      throw new Error(
-        `An audiobook with the id of '${id}' does not exist`,
-      );
+    if (!existingAudiobook) return null;
 
     const isRemoved = await audiobookData.remove(id);
 
