@@ -23,16 +23,9 @@ function makeConfigureMiddleware(app, staticRoot) {
       .use(express.static(path.join(__dirname, staticRoot)));
 }
 
-function makeListen(app) {
-  return (port, callback) => app.listen(port, callback);
-}
-
 export default function makeApp({ staticRoot }) {
   const app = express();
-
-  return Object.freeze({
-    configureMiddleware: makeConfigureMiddleware(app, staticRoot),
-    listen: makeListen(app),
-    connectToDb: connectToDb,
-  });
+  app.configureMiddleware = makeConfigureMiddleware(app, staticRoot);
+  app.connectToDb = connectToDb;
+  return app;
 }
