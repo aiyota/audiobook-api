@@ -11,8 +11,9 @@ import connectToDb from "../data-access/index.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-function makeConfigureMiddleware(app, staticRoot) {
-  return () =>
+export default function makeApp({ staticRoot }) {
+  const app = express();
+  app.configureMiddleware = () =>
     app
       .use(helmet())
       .use(cors())
@@ -21,11 +22,7 @@ function makeConfigureMiddleware(app, staticRoot) {
       .use(xss())
       .use(mongoSanitize())
       .use(express.static(path.join(__dirname, staticRoot)));
-}
 
-export default function makeApp({ staticRoot }) {
-  const app = express();
-  app.configureMiddleware = makeConfigureMiddleware(app, staticRoot);
   app.connectToDb = connectToDb;
   return app;
 }
