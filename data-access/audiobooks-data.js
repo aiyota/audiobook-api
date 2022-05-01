@@ -1,5 +1,5 @@
 import { toObjectWithValues, required } from "../utils/index.js";
-import Audiobook from "./models/Audiobook.js";
+import Audiobook from "./schemas/Audiobook.js";
 
 export default function makeAudiobooksData() {
   return Object.freeze({ getAll, getById, create, update, remove });
@@ -8,7 +8,7 @@ export default function makeAudiobooksData() {
     return await Audiobook.find();
   }
 
-  async function getById(id) {
+  async function getById(id = required("id")) {
     return await Audiobook.findOne({ _id: id });
   }
 
@@ -43,7 +43,6 @@ export default function makeAudiobooksData() {
       runtime,
     });
 
-    console.log({ propsToUpdate });
     const { modifiedCount } = await Audiobook.updateOne(
       filter,
       propsToUpdate,
