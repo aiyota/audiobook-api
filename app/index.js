@@ -6,6 +6,7 @@ import xss from "xss-clean";
 import mongoSanitize from "express-mongo-sanitize";
 import path from "path";
 import { fileURLToPath } from "url";
+import connectToDb from "../data-access/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,5 +33,6 @@ export default function makeApp({ staticRoot }) {
   return Object.freeze({
     configureMiddleware: makeConfigureMiddleware(app, staticRoot),
     listen: makeListen(app),
+    connectToDb: connectToDb,
   });
 }
