@@ -1,4 +1,4 @@
-import makeAudiobook from "../models/Audiobook.js";
+import makeAudiobook from "../data-access/models/Audiobook.js";
 
 export default function makeGetAllAudiobooks({ audiobookData }) {
   return async function getAllAudiobooks() {

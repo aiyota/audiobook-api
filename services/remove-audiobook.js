@@ -1,4 +1,4 @@
-import makeAudiobook from "../models/Audiobook.js";
+import makeAudiobook from "../data-access/models/Audiobook.js";
 import { required } from "../utils/index.js";
 
 export default function makeRemoveAudiobook({ audiobookData }) {
